@@ -1,4 +1,5 @@
 $turn = 'X'
+$count_turns = 0
 $game_over = false
 $grid = [
     "_","_","_",
@@ -42,6 +43,7 @@ end
 def add_turn_to_board(position)
 
     if ( ($grid[position] != 'X' && $grid[position] != "O") && (position <= 8 && position >= 0))
+        $count_turns += 1
         $grid[position] = $turn
     else
         draw_grid
@@ -50,6 +52,14 @@ def add_turn_to_board(position)
         add_turn_to_board pos
     end
 
+end
+
+def check_for_draw()
+   if $count_turns >= 9
+        puts "It's a draw!"
+        play_again
+   end
+   
 end
 
 def start_game()
@@ -61,6 +71,7 @@ def start_game()
         add_turn_to_board pos
 
         check_for_win
+        check_for_draw
         switch_turns
 
     end
@@ -73,11 +84,12 @@ def play_again()
     if $play_again == 'y'
         #reset global variables
         $turn = "X"
+        $count_turns = 0
         $game_over = false
         $grid = [
-            "_","_","3",
-            "4","5","6",
-            "7","8","9"
+            "_","_","_",
+            "_","_","_",
+            "_","_","_"
         ]
         start_game
     else
@@ -86,12 +98,3 @@ def play_again()
 end
 
 start_game
-
-
-
-
-
-
-
-
-
